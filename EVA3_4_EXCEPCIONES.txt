@@ -14,83 +14,141 @@ Switching to SQL mode... Commands end with ;
  MySQL  SQL > \connect --mc root@localhost
 Creating a Classic session to 'root@localhost'
 Fetching global names for auto-completion... Press ^C to stop.
-Your MySQL connection id is 11
+Your MySQL connection id is 10
 Server version: 8.0.43 MySQL Community Server - GPL
 No default schema selected; type \use <schema> to set one.
  MySQL  localhost:3306 ssl  SQL > use tbd3;
 Default schema set to `tbd3`.
 Fetching global names, object names from `tbd3` for auto-completion... Press ^C to stop.
- MySQL  localhost:3306 ssl  tbd3  SQL > show tables;
-+----------------+
-| Tables_in_tbd3 |
-+----------------+
-| actor          |
-| datos          |
-| personas       |
-+----------------+
-3 rows in set (0.0010 sec)
- MySQL  localhost:3306 ssl  tbd3  SQL > desc personas;
-+------------+-------------+------+-----+---------+-------+
-| Field      | Type        | Null | Key | Default | Extra |
-+------------+-------------+------+-----+---------+-------+
-| rfc        | varchar(10) | NO   | PRI | NULL    |       |
-| nombre     | varchar(50) | NO   |     | NULL    |       |
-| ap_paterno | varchar(50) | YES  |     | NULL    |       |
-| ap_materno | varchar(50) | YES  |     | NULL    |       |
-| fecha_nac  | date        | YES  |     | NULL    |       |
-+------------+-------------+------+-----+---------+-------+
-5 rows in set (0.0011 sec)
- MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
-+------------------------------------------------------+
-| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
-+------------------------------------------------------+
-| NULL                                                 |
-+------------------------------------------------------+
-1 row in set (0.0009 sec)
- MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
-+------------------------------------------------------+
-| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
-+------------------------------------------------------+
-| CR                                                   |
-+------------------------------------------------------+
-1 row in set (0.0008 sec)
- MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
-+------------------------------------------------------+
-| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
-+------------------------------------------------------+
-| CRM                                                  |
-+------------------------------------------------------+
-1 row in set (0.0009 sec)
- MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
-+------------------------------------------------------+
-| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
-+------------------------------------------------------+
-| CRMA                                                 |
-+------------------------------------------------------+
-1 row in set (0.0008 sec)
- MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
-ERROR: 1054 (42S22): Unknown column 'rfc_fechagenerar_rfc' in 'field list'
- MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
-+------------------------------------------------------+
-| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
-+------------------------------------------------------+
-| 031011                                               |
-+------------------------------------------------------+
-1 row in set (0.0007 sec)
- MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
-+------------------------------------------------------+
-| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
-+------------------------------------------------------+
-| CRMA031011                                           |
-+------------------------------------------------------+
-1 row in set (0.0008 sec)
- MySQL  localhost:3306 ssl  tbd3  SQL > call agregar_personas("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
-Query OK, 1 row affected (0.0078 sec)
- MySQL  localhost:3306 ssl  tbd3  SQL > select * from personas;
-+------------+--------+------------+------------+------------+
-| rfc        | nombre | ap_paterno | ap_materno | fecha_nac  |
-+------------+--------+------------+------------+------------+
-| CRMA031011 | ALEXIS | CRUZ       | MARTINEZ   | 2003-10-11 |
-+------------+--------+------------+------------+------------+
+ MySQL  localhost:3306 ssl  tbd3  SQL > set @valor =;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ MySQL  localhost:3306 ssl  tbd3  SQL > set @valor = 0;
+Query OK, 0 rows affected (0.0302 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select @valor
+                                     -> ;
++--------+
+| @valor |
++--------+
+|      0 |
++--------+
 1 row in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > call calcular(3,@valor);
+Query OK, 0 rows affected (0.0039 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select @valor ;
++--------+
+| @valor |
++--------+
+|      9 |
++--------+
+1 row in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > create table prueba(id int not null key);
+Query OK, 0 rows affected (0.0218 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > insert into prueba value(1),(2),(3);
+
+Query OK, 3 rows affected (0.0102 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd3  SQL > insert into prueba value(1);
+ERROR: 1062 (23000): Duplicate entry '1' for key 'prueba.PRIMARY'
+ MySQL  localhost:3306 ssl  tbd3  SQL > call insertar_prueba(4);
++------------------------------+
+| mensaje                      |
++------------------------------+
+| Clave isertada correctamente |
++------------------------------+
+1 row in set (0.0070 sec)
+
+Query OK, 0 rows affected (0.0070 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > call insertar_prueba(5);
++----------------------------------------------+
+| mensaje                                      |
++----------------------------------------------+
+| Clave ininsertar_pruebasertada correctamente |
++----------------------------------------------+
+1 row in set (0.0085 sec)
+
+Query OK, 0 rows affected (0.0085 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > call insertar_prueba(6);
++-------------------------------+
+| mensaje                       |
++-------------------------------+
+| Clave insertada correctamente |
++-------------------------------+
+1 row in set (0.0068 sec)
+
+Query OK, 0 rows affected (0.0068 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > call insertar_prueba(6);
++------------------------+
+| mensaje_error          |
++------------------------+
+| Error: calve duplicado |
++------------------------+
+1 row in set (0.0006 sec)
+
+Query OK, 0 rows affected (0.0006 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > call insertar_prueba(6);
++------------------------+
+| mensaje_error          |
++------------------------+
+| Error: clave duplicada |
++------------------------+
+1 row in set (0.0008 sec)
+
+Query OK, 0 rows affected (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > call devision(4,5);
+ERROR: 1305 (42000): PROCEDURE tbd3.devision does not exist
+ MySQL  localhost:3306 ssl  tbd3  SQL > call division(4,5);
++----------+
+| resu_fin |
++----------+
+|     0.80 |
++----------+
+1 row in set (0.0011 sec)
+
+Query OK, 0 rows affected (0.0011 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > call division(4,0);
+ERROR: 1365 (22012): Division by 0
+ MySQL  localhost:3306 ssl  tbd3  SQL > call division(4,5);
++----------+
+| resu_fin |
++----------+
+|     0.80 |
++----------+
+1 row in set (0.0011 sec)
+
+Query OK, 0 rows affected (0.0011 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > call division(4,0);
++----------------------------------------+
+| mensaje                                |
++----------------------------------------+
+| Error division entre cero no permitido |
++----------------------------------------+
+1 row in set (0.0010 sec)
+
+Query OK, 0 rows affected (0.0010 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > call division(4,5);
++----------+
+| resu_fin |
++----------+
+|     0.80 |
++----------+
+1 row in set (0.0012 sec)
+
+Query OK, 0 rows affected (0.0012 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > call division(4,0);
++----------------------------------------+
+| mensaje                                |
++----------------------------------------+
+| Error division entre cero no permitido |
++----------------------------------------+
+1 row in set (0.0006 sec)
+
++----------+
+| resu_fin |
++----------+
+|     NULL |
++----------+
+1 row in set (0.0006 sec)
+
+Query OK, 0 rows affected (0.0006 sec)
  MySQL  localhost:3306 ssl  tbd3  SQL >
