@@ -1,0 +1,96 @@
+Microsoft Windows [Versión 10.0.26200.7019]
+(c) Microsoft Corporation. Todos los derechos reservados.
+
+C:\Users\alex_>mysqlsh
+MySQL Shell 8.0.43
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 11
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use tbd3;
+Default schema set to `tbd3`.
+Fetching global names, object names from `tbd3` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd3  SQL > show tables;
++----------------+
+| Tables_in_tbd3 |
++----------------+
+| actor          |
+| datos          |
+| personas       |
++----------------+
+3 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > desc personas;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| rfc        | varchar(10) | NO   | PRI | NULL    |       |
+| nombre     | varchar(50) | NO   |     | NULL    |       |
+| ap_paterno | varchar(50) | YES  |     | NULL    |       |
+| ap_materno | varchar(50) | YES  |     | NULL    |       |
+| fecha_nac  | date        | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
++------------------------------------------------------+
+| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
++------------------------------------------------------+
+| NULL                                                 |
++------------------------------------------------------+
+1 row in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
++------------------------------------------------------+
+| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
++------------------------------------------------------+
+| CR                                                   |
++------------------------------------------------------+
+1 row in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
++------------------------------------------------------+
+| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
++------------------------------------------------------+
+| CRM                                                  |
++------------------------------------------------------+
+1 row in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
++------------------------------------------------------+
+| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
++------------------------------------------------------+
+| CRMA                                                 |
++------------------------------------------------------+
+1 row in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
+ERROR: 1054 (42S22): Unknown column 'rfc_fechagenerar_rfc' in 'field list'
+ MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
++------------------------------------------------------+
+| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
++------------------------------------------------------+
+| 031011                                               |
++------------------------------------------------------+
+1 row in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
++------------------------------------------------------+
+| generar_rfc("CRUZ","MARTINEZ","ALEXIS","2003-10-11") |
++------------------------------------------------------+
+| CRMA031011                                           |
++------------------------------------------------------+
+1 row in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > call agregar_personas("CRUZ","MARTINEZ","ALEXIS","2003-10-11");
+Query OK, 1 row affected (0.0078 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from personas;
++------------+--------+------------+------------+------------+
+| rfc        | nombre | ap_paterno | ap_materno | fecha_nac  |
++------------+--------+------------+------------+------------+
+| CRMA031011 | ALEXIS | CRUZ       | MARTINEZ   | 2003-10-11 |
++------------+--------+------------+------------+------------+
+1 row in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL >
