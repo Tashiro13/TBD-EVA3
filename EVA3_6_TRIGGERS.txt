@@ -1,0 +1,171 @@
+Microsoft Windows [Versión 10.0.26200.7019]
+(c) Microsoft Corporation. Todos los derechos reservados.
+
+C:\Users\alex_>mysqlsh
+MySQL Shell 8.0.43
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 10
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use tbd3;
+Default schema set to `tbd3`.
+Fetching global names, object names from `tbd3` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd3  SQL > show tables;
++----------------+
+| Tables_in_tbd3 |
++----------------+
+| actor          |
+| datos          |
+| personas       |
+| prueba         |
++----------------+
+4 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > desc personas;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| rfc        | varchar(10) | NO   | PRI | NULL    |       |
+| nombre     | varchar(50) | NO   |     | NULL    |       |
+| ap_paterno | varchar(50) | YES  |     | NULL    |       |
+| ap_materno | varchar(50) | YES  |     | NULL    |       |
+| fecha_nac  | date        | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > insert into personas value ("INFI3NF","Pepe","Martinez","Gonzalez","1987-11-10");
+Query OK, 1 row affected (0.0446 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > insert into personas value ("UNRVSU","Pepe","Martinez","Gonzalez","1987-11-10");
+
+Query OK, 1 row affected (0.0041 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > SET
+                                     -> @;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+ MySQL  localhost:3306 ssl  tbd3  SQL > select @mensaje;
++----------------------------+
+| @mensaje                   |
++----------------------------+
+| Persona agregada con exito |
++----------------------------+
+1 row in set (0.0003 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > create table bitacora(descripcion varchar(50));
+Query OK, 0 rows affected (0.0183 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from personas;
++------------+--------+------------+------------+------------+
+| rfc        | nombre | ap_paterno | ap_materno | fecha_nac  |
++------------+--------+------------+------------+------------+
+| CRMA031011 | ALEXIS | CRUZ       | MARTINEZ   | 2003-10-11 |
+| INFI3NF    | Pepe   | Martinez   | Gonzalez   | 1987-11-10 |
+| PERJ870212 | Juan   | Perez      | Ramirez    | 1987-02-12 |
+| UNRVSU     | Pepe   | Martinez   | Gonzalez   | 1987-11-10 |
++------------+--------+------------+------------+------------+
+4 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > delete from personas where rfc = "UNRVSU";
+Query OK, 1 row affected (0.0083 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from bitacora;
++--------------------+
+| descripcion        |
++--------------------+
+| Borrado de persona |
++--------------------+
+1 row in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > delete from personas where rfc = "INFI3FN";
+Query OK, 0 rows affected (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from bitacora;
++--------------------+
+| descripcion        |
++--------------------+
+| Borrado de persona |
++--------------------+
+1 row in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from bitacora;
++--------------------+
+| descripcion        |
++--------------------+
+| Borrado de persona |
++--------------------+
+1 row in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from personas;
++------------+--------+------------+------------+------------+
+| rfc        | nombre | ap_paterno | ap_materno | fecha_nac  |
++------------+--------+------------+------------+------------+
+| CRMA031011 | ALEXIS | CRUZ       | MARTINEZ   | 2003-10-11 |
+| INFI3NF    | Pepe   | Martinez   | Gonzalez   | 1987-11-10 |
+| PERJ870212 | Juan   | Perez      | Ramirez    | 1987-02-12 |
++------------+--------+------------+------------+------------+
+3 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > delete from personas where rfc = "INFI3FN";
+Query OK, 0 rows affected (0.0005 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from bitacora;
++--------------------+
+| descripcion        |
++--------------------+
+| Borrado de persona |
++--------------------+
+1 row in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from personas;
++------------+--------+------------+------------+------------+
+| rfc        | nombre | ap_paterno | ap_materno | fecha_nac  |
++------------+--------+------------+------------+------------+
+| CRMA031011 | ALEXIS | CRUZ       | MARTINEZ   | 2003-10-11 |
+| INFI3NF    | Pepe   | Martinez   | Gonzalez   | 1987-11-10 |
+| PERJ870212 | Juan   | Perez      | Ramirez    | 1987-02-12 |
++------------+--------+------------+------------+------------+
+3 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > insert into personas value ("UNRVSU","Pepe","Martinez","Gonzalez","1987-11-10");
+
+ERROR: 1318 (42000): Incorrect number of arguments for FUNCTION tbd3.generar_rfc; expected 4, got 6
+ MySQL  localhost:3306 ssl  tbd3  SQL > insert into personas value ("UNRVSU","Pepe","Martinez","Gonzalez","1987-11-10");
+
+ERROR: 1318 (42000): Incorrect number of arguments for FUNCTION tbd3.generar_rfc; expected 4, got 6
+ MySQL  localhost:3306 ssl  tbd3  SQL > insert into personas value ("UNRVSU","Pepe","Martinez","Gonzalez","1987-11-10");
+
+ERROR: 1318 (42000): Incorrect number of arguments for FUNCTION tbd3.generar_rfc; expected 4, got 5
+ MySQL  localhost:3306 ssl  tbd3  SQL > insert into personas value ("UNRVSU","Pepe","Martinez","Gonzalez","1987-11-10");
+
+Query OK, 1 row affected (0.0079 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from personas;
++------------+--------+------------+------------+------------+
+| rfc        | nombre | ap_paterno | ap_materno | fecha_nac  |
++------------+--------+------------+------------+------------+
+| CRMA031011 | ALEXIS | CRUZ       | MARTINEZ   | 2003-10-11 |
+| INFI3NF    | Pepe   | Martinez   | Gonzalez   | 1987-11-10 |
+| PEMG871110 | Pepe   | Martinez   | Gonzalez   | 1987-11-10 |
+| PERJ870212 | Juan   | Perez      | Ramirez    | 1987-02-12 |
++------------+--------+------------+------------+------------+
+4 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from bitacora;
++--------------------+
+| descripcion        |
++--------------------+
+| Borrado de persona |
++--------------------+
+1 row in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > delete from personas where rfc = "INFI3FN";
+Query OK, 0 rows affected (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from bitacora;
++--------------------+
+| descripcion        |
++--------------------+
+| Borrado de persona |
++--------------------+
+1 row in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > delete from personas where rfc = "CRMA031011";
+Query OK, 1 row affected (0.0346 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL > select * from bitacora;
++---------------------+
+| descripcion         |
++---------------------+
+| Borrado de persona  |
+| Borrado: CRMA031011 |
++---------------------+
+2 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd3  SQL >
